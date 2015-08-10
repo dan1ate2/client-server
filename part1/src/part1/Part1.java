@@ -16,6 +16,7 @@ public class Part1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        // testing to see if update in netbeans goes to git
     }
     
 }
