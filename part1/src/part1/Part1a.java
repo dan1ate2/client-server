@@ -28,7 +28,7 @@ public class Part1a {
             // prompt for numbers
             System.out.print("Enter two (whole) numbers: ");
             inputAsString = input.nextLine(); // scanner input as string
-            inputStringArray = inputAsString.split(" ");
+            inputStringArray = inputAsString.split(" "); // put in String array
          
             // if input IS NOT empty & array EQUALS two Strings
             if ((!inputAsString.isEmpty()) && (inputStringArray.length == 2)) {
@@ -37,7 +37,7 @@ public class Part1a {
                     int firstNum = Integer.parseInt(inputStringArray[0]);
                     int secondNum = Integer.parseInt(inputStringArray[1]);
                     
-                    // put numbers into array
+                    // put numbers into int array
                     numArray[currentArrayIndex] = firstNum;
                     currentArrayIndex++;
                     numArray[currentArrayIndex] = secondNum;
@@ -58,7 +58,7 @@ public class Part1a {
         while ((!inputAsString.isEmpty()) && 
                 (currentArrayIndex < numArray.length));
 
-        // check max numbers
+        // check for max amount of numbers entered
         if (currentArrayIndex == numArray.length) {
             System.out.println("The maximum amount of numbers "
                     + "has been entered.");
@@ -66,8 +66,9 @@ public class Part1a {
         }
 
         // find max and min numbers
-        maxNum = numArray[0];
-        minNum = numArray[0];
+        maxNum = numArray[0]; // initialize as first array int to compare
+        minNum = numArray[0]; // initialize as first array int to compare
+        // iterate through input numbers
         for (int i = 0; i < currentArrayIndex; i++) {
             if (numArray[i] > maxNum) {
                 maxNum = numArray[i];
