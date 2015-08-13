@@ -6,7 +6,7 @@
     Purpose: read integers 2 at a time
  */
 
-package part1;
+package part1a;
 
 import java.util.Scanner;
 
