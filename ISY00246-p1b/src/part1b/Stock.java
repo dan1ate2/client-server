@@ -7,10 +7,6 @@
  */
 package part1b;
 
-/**
- *
- * @author Ðan
- */
 public interface Stock {
     public int getID();
         // get stock ID
