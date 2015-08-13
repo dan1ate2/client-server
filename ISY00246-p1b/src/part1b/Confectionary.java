@@ -7,10 +7,6 @@
  */
 package part1b;
 
-/**
- *
- * @author Ðan
- */
 public class Confectionary implements Stock{
     final private int itemId;
     final private String itemDesc;

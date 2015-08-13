@@ -9,15 +9,7 @@ package part1b;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Ðan
- */
 public class Part1b {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         
         // create array list of confectionary
@@ -33,7 +25,5 @@ public class Part1b {
         for (Confectionary i : confecList) {
             System.out.println(i);
         }
-        
     }
-    
 }
