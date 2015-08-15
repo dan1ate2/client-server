@@ -3,9 +3,9 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>ISY00246-p1c</name>
+            <name>A1P1b</name>
             <source-roots>
-                <root id="src.part1c.dir" name="part1c"/>
+                <root id="src.dir"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>
