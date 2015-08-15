@@ -25,9 +25,14 @@ public class Part1d {
             File file = new File(args[0]);
             if (file.exists()) {
                 BufferedReader br = new BufferedReader(new FileReader(file));
+                
+                // print file to console
                 for (String line; (line = br.readLine()) != null;) {
-                    System.out.print(line);
+                    System.out.println(line); // print each record
                 }
+                
+                // distinguish stock type and add to array
+                
             }
         }
     }
