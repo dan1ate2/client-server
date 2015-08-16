@@ -1,4 +1,0 @@
-cf 12 Jelly Beans 34 15th December 2017
-sd 21 Sprite 3 12
-12 Jelly Beans 34 15th December 2017 cf
-21 Sprite 3 12 sd
