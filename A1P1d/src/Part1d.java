@@ -18,6 +18,15 @@ public class Part1d {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
+        // welcome message and instructions
+        System.out.println("Welcome.\nTo display stock items, the format " + 
+                "inside the file must start with item identifier on first line,\n" + 
+                "followed by item details on seperate lines, then '!' on line "
+                + "underneath.\n\nExample for Confectionary:\ncf\n32\nChocolate\n55\n10th "
+                + "August 2018\n!\n" + "\nConfectionary data (in order): 'cf', Id, "
+                + "Description, Quantity, Expiry, '!'\n" + "Soft Drink data (in order): "
+                + "'sd', ID, Description, Quantity, Package Size, '!'\n");
+        
         if (args.length > 0) { // if any args exist
             File file = new File(args[0]); // filename from console parameter
             
@@ -34,12 +43,13 @@ public class Part1d {
                         
                         // while not end of stock record or file
                         while ((!"!".equals(line)) && (line != null)) { 
+                            lineNumber++; // update line number read in file
+                            
                             // add to temp arraylist
-                            if (!"".equals(line)) { // don't if blank line
+                            if (!"".equals(line)) { // do if not blank line
                                 stockItemElements.add(line);
                             }
-                            line = br.readLine();
-                            lineNumber++; // update line number read in file
+                            line = br.readLine(); // read next line
                         }
                         
                         // put data objects into arraylist
@@ -98,14 +108,14 @@ public class Part1d {
             } // end of 'if file exists'
             else {
                 // error message if filename doesn't exist
-                System.out.println("Error, file does not exist.");
+                System.out.println("Error, input file does not exist.");
             }
         } // end of 'if arguments > 0'
         else {
         // error message if no filename given
             System.out.println("Error, no filename was given.");
         }
-    } // end of main
+    } // end of main method
     
     // polymorphically process Stock items for print
     public static void displayStockItem(Stock s) {
