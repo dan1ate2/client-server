@@ -13,7 +13,7 @@ public class Part1c {
     public static void main(String[] args) {
         
         // create array list of stock
-        ArrayList<Stock> stockList = new ArrayList<Stock>() {};
+        ArrayList<Stock> stockList = new ArrayList();
         stockList.add(new Confectionary
             (11, "Red Liqorice", 5, "23rd June 2016"));
         stockList.add(new Confectionary
