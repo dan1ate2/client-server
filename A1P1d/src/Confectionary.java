@@ -52,10 +52,7 @@ public class Confectionary implements Stock{
     // formatted output
     @Override
     public String toString() {
-        return "Item ID: " + getID() + 
-                "\nDescription: " + getDescription() + 
-                "\nQuantity: " + number() + 
-                "\nExpiry: " + getExpiry() + 
-                "\n";
+        return getID() + ", " + getDescription() + ", " + number() + ", " + 
+            getExpiry() + ".";
     }
 }

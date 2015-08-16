@@ -69,8 +69,8 @@ public class Part1d {
                                     }
                                     catch (Exception e){
                                         System.out.println("Data error:\n" + 
-                                            "Couldn't create confectionary item " + 
-                                            "above line " + lineNumber + 
+                                            "Couldn't create confectionary item " 
+                                            + "above line " + lineNumber + 
                                             " in file.");
                                     }
                                     break;
@@ -91,8 +91,10 @@ public class Part1d {
                                     }
                                     break;
                                 default : // no flag found
-                                    System.out.println("Error: No flag found,"
-                                        + " item skipped.");
+                                    System.out.println("Data error:\n" + "No item " 
+                                        + "identifier found. Couldn't create "
+                                        + "item above line " + lineNumber + 
+                                        " in file.");
                                     break;
                             } // end of switch
                         }
@@ -100,9 +102,17 @@ public class Part1d {
                     br.close(); // close file
                     
                     // print stock items in arraylist
-                    System.out.println("\nSTOCK ITEMS:");
+                    System.out.println("\n--STOCK ITEMS--\nConfectionary:");
                     stockList.stream().forEach((i) -> {
+                        if (i instanceof Confectionary) {
                         displayStockItem(i);
+                        }
+                    });
+                    System.out.println("\nSoft Drink:");
+                    stockList.stream().forEach((i) -> {
+                        if (i instanceof SoftDrink) {
+                        displayStockItem(i);
+                        }
                     });
                 }
             } // end of 'if file exists'
