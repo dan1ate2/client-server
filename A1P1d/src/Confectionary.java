@@ -53,9 +53,9 @@ public class Confectionary implements Stock{
     @Override
     public String toString() {
         return "Item ID: " + getID() + 
-                "\nItem Description: " + getDescription() + 
-                "\nItem Quantity: " + number() + 
-                "\nItem Expiry: " + getExpiry() + 
+                "\nDescription: " + getDescription() + 
+                "\nQuantity: " + number() + 
+                "\nExpiry: " + getExpiry() + 
                 "\n";
     }
 }

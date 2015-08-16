@@ -1,2 +1,42 @@
-cf 12 Jelly Beans 34 15th December 2017
-sd 21 Sprite 3 12
+cf
+12f
+Jelly Beans
+34
+15th December 2017
+!
+sd
+21
+Sprite
+3
+12
+!
+cf
+13
+Snakes
+68
+24th May 2017
+!
+sd
+22t
+Coke
+8
+12
+!
+cf
+14
+Tim Tams
+22
+12/07/16
+!
+cf
+15
+Chocolate Bar
+22
+12/07/16
+!
+sd
+23
+Solo
+11
+12
+!

@@ -52,9 +52,9 @@ public class SoftDrink implements Stock{
     @Override
     public String toString() {
         return "Item ID: " + getID() + 
-                "\nItem Description: " + getDescription() + 
-                "\nItem Quantity: " + number() + 
-                "\nItem Package Size: " + getPackageSize() + 
+                "\nDescription: " + getDescription() + 
+                "\nQuantity: " + number() + 
+                "\nPackage Size: " + getPackageSize() + 
                 "\n";
     }
 }
