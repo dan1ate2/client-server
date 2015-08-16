@@ -26,9 +26,38 @@ public class Part1d {
             if (file.exists()) {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 
-                // print file to console
+                // scan every line in file
                 for (String line; (line = br.readLine()) != null;) {
-                    System.out.println(line); // print each record
+                    System.out.println("\nDATA: " + line); // print each record
+                    
+                    // test flags in file (method test 1)
+                    System.out.println("\nTest method 1:");
+                    if (line.contains("cf")) {
+                        System.out.println("Line contains 'cf'");
+                    }
+                    else if (line.contains("sd")) {
+                        System.out.println("Line contains 'sd'");
+                    }
+                    
+                    // test flags in file (method test 2)
+                    System.out.println("\nTest method 2:");
+                    String[] lineToArray;
+                    lineToArray = line.split(" ");
+                    if (lineToArray[0].equals("cf")) {
+                        System.out.println("First string is 'cf'");
+                    }
+                    else if (lineToArray[0].equals("sd")) {
+                        System.out.println("First string is 'sd'");
+                    }
+                    
+                    // test flags in file (method test 3)
+                    System.out.println("\nTest method 3:");
+                    if (line.startsWith("cf")) {
+                        System.out.println("First string starts with 'cf'");
+                    }
+                    else if (line.startsWith("sd")) {
+                        System.out.println("First string starts with 'sd'");
+                    }
                 }
                 
                 // distinguish stock type and add to array
