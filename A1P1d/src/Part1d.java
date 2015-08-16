@@ -3,7 +3,7 @@
     ISY00246
     Assignment 1
     Part 1d
-    Purpose: Test reading file with Stock object data
+    Purpose: Test reading file with Stock object data then printing to console
  */
 
 import java.io.BufferedReader;
@@ -18,7 +18,7 @@ public class Part1d {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        System.out.println(args[0]); // prints argument
+//        System.out.println(args[0]); // prints argument (filename)
         
         if (args.length > 0) { // if any args exist
             File file = new File(args[0]); // filename from console parameter
@@ -31,40 +31,59 @@ public class Part1d {
                     
                     // scan every line in file
                     for (String line; (line = br.readLine()) != null;) {
-                        System.out.println("\nDATA: " + line); // PRINT RECORD
+//                        System.out.println("\nDATA: " + line); // PRINT RECORD
                         
-                        String[] lineToArray;
-                        lineToArray = line.split(" "); // put data into array
+                        ArrayList<String> stockItemElements = new ArrayList();
+                        // while not end of stock record or file
+                        while ((!"!".equals(line)) && (line != null)) { 
+                            // add to array
+                            stockItemElements.add(line);
+                            line = br.readLine();
+                        }
                         
                         // put data objects into arraylist
-                        switch (lineToArray[0]) { // find flag in start of data
-                            case "cf": // Confectionary
-                                System.out.println("Flag is 'cf'");
-                                // validate data
-                                try {
-                                    stockList.add(new Confectionary
-                                        (Integer.parseInt(lineToArray[1]), 
-                                            lineToArray[2], 
-                                            Integer.parseInt(lineToArray[3]), 
-                                            lineToArray[4]));
-                                }
-                                catch (Exception e){
-                                    System.out.println("Couldn't create "
+                        if (("!".equals(line)) || (line == null)) {
+                            // find flag in start of data
+                            switch (stockItemElements.get(0)) { 
+                                case "cf": // flag is Confectionary
+                                    // validate data
+                                    try {
+                                        stockList.add(new Confectionary
+                                            (Integer.parseInt(stockItemElements.get(1)), 
+                                            stockItemElements.get(2), 
+                                            Integer.parseInt(stockItemElements.get(3)), 
+                                            stockItemElements.get(4)));
+                                    }
+                                    catch (Exception e){
+                                        System.out.println("Couldn't create "
                                             + "confectionary item");
-                                }
-                                break;
-                            case "sd": // Soft Drink
-                                System.out.println("Flag is 'sd'");
-                                break;
-                            default : // if no flag found
-                                System.out.println("Error: No flag found,"
+                                    }
+                                    break;
+                                case "sd": // flag is Soft Drink
+                                    // validate
+                                    try {
+                                        stockList.add(new SoftDrink
+                                            (Integer.parseInt(stockItemElements.get(1)), 
+                                            stockItemElements.get(2), 
+                                            Integer.parseInt(stockItemElements.get(3)), 
+                                            Integer.parseInt(stockItemElements.get(4))));
+                                    }
+                                    catch (Exception e){
+                                        System.out.println("Couldn't create "
+                                            + "softdrink item");
+                                    }
+                                    break;
+                                default : // no flag found
+                                    System.out.println("Error: No flag found,"
                                         + " item skipped.");
-                                break;
+                                    break;
+                            }
                         }
                     }
                     br.close(); // close file
                     
                     // print stock items in arraylist
+                    System.out.println("\nSTOCK ITEMS:");
                     stockList.stream().forEach((i) -> {
                         displayStockItem(i);
                     });
