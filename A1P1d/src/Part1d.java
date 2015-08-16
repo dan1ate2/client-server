@@ -97,21 +97,23 @@ public class Part1d {
                                         " in file.");
                                     break;
                             } // end of switch
-                        }
-                    }
+                        } // end 'if statement' (putting data into arraylist)
+                    } // end 'for loop' (scanning lines of file)
                     br.close(); // close file
                     
                     // print stock items in arraylist
                     System.out.println("\n--STOCK ITEMS--\nConfectionary:");
                     stockList.stream().forEach((i) -> {
                         if (i instanceof Confectionary) {
-                        displayStockItem(i);
+                            // print confectionary items
+                            displayStockItem(i);
                         }
                     });
                     System.out.println("\nSoft Drink:");
                     stockList.stream().forEach((i) -> {
                         if (i instanceof SoftDrink) {
-                        displayStockItem(i);
+                            // print softdrink items
+                            displayStockItem(i);
                         }
                     });
                 }
