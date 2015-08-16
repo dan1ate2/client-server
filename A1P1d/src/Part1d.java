@@ -18,8 +18,6 @@ public class Part1d {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-//        System.out.println(args[0]); // prints argument (filename)
-        
         if (args.length > 0) { // if any args exist
             File file = new File(args[0]); // filename from console parameter
             
@@ -28,26 +26,31 @@ public class Part1d {
                 try (BufferedReader br = 
                         new BufferedReader(new FileReader(file))) {
                     ArrayList<Stock> stockList = new ArrayList();
+                    int lineNumber = 0; // line number in file for errors
                     
                     // scan every line in file
                     for (String line; (line = br.readLine()) != null;) {
-//                        System.out.println("\nDATA: " + line); // PRINT RECORD
-                        
                         ArrayList<String> stockItemElements = new ArrayList();
+                        
                         // while not end of stock record or file
                         while ((!"!".equals(line)) && (line != null)) { 
-                            // add to array
-                            stockItemElements.add(line);
+                            // add to temp arraylist
+                            if (!"".equals(line)) { // don't if blank line
+                                stockItemElements.add(line);
+                            }
                             line = br.readLine();
+                            lineNumber++; // update line number read in file
                         }
                         
                         // put data objects into arraylist
                         if (("!".equals(line)) || (line == null)) {
+                            lineNumber++; // update line number read in file
+                            
                             // find flag in start of data
                             switch (stockItemElements.get(0)) { 
-                                case "cf": // flag is Confectionary
-                                    // validate data
+                                case "cf": // flag is Confectionary object
                                     try {
+                                        // validate data
                                         stockList.add(new Confectionary
                                             (Integer.parseInt(stockItemElements.get(1)), 
                                             stockItemElements.get(2), 
@@ -55,13 +58,15 @@ public class Part1d {
                                             stockItemElements.get(4)));
                                     }
                                     catch (Exception e){
-                                        System.out.println("Couldn't create "
-                                            + "confectionary item");
+                                        System.out.println("Data error:\n" + 
+                                            "Couldn't create confectionary item " + 
+                                            "above line " + lineNumber + 
+                                            " in file.");
                                     }
                                     break;
-                                case "sd": // flag is Soft Drink
-                                    // validate
+                                case "sd": // flag is SoftDrink object
                                     try {
+                                        // validate data
                                         stockList.add(new SoftDrink
                                             (Integer.parseInt(stockItemElements.get(1)), 
                                             stockItemElements.get(2), 
@@ -69,15 +74,17 @@ public class Part1d {
                                             Integer.parseInt(stockItemElements.get(4))));
                                     }
                                     catch (Exception e){
-                                        System.out.println("Couldn't create "
-                                            + "softdrink item");
+                                        System.out.println("Data error:\n" + 
+                                            "Couldn't create softdrink item " + 
+                                            "above line " + lineNumber + 
+                                            " in file.");
                                     }
                                     break;
                                 default : // no flag found
                                     System.out.println("Error: No flag found,"
                                         + " item skipped.");
                                     break;
-                            }
+                            } // end of switch
                         }
                     }
                     br.close(); // close file
@@ -88,9 +95,17 @@ public class Part1d {
                         displayStockItem(i);
                     });
                 }
+            } // end of 'if file exists'
+            else {
+                // error message if filename doesn't exist
+                System.out.println("Error, file does not exist.");
             }
+        } // end of 'if arguments > 0'
+        else {
+        // error message if no filename given
+            System.out.println("Error, no filename was given.");
         }
-    }
+    } // end of main
     
     // polymorphically process Stock items for print
     public static void displayStockItem(Stock s) {
