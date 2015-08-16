@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Part1d {
     /**
@@ -19,64 +20,61 @@ public class Part1d {
     public static void main(String[] args) throws IOException {
         System.out.println(args[0]); // prints argument
         
-        if (args.length > 0) { // if argument exists
+        if (args.length > 0) { // if any args exist
+            File file = new File(args[0]); // filename from console parameter
             
-            // try print file
-            File file = new File(args[0]);
+            // get file input
             if (file.exists()) {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                
-                // scan every line in file
-                for (String line; (line = br.readLine()) != null;) {
-                    System.out.println("\nDATA: " + line); // print each record
+                try (BufferedReader br = 
+                        new BufferedReader(new FileReader(file))) {
+                    ArrayList<Stock> stockList = new ArrayList();
                     
-                    // test flags in file (method test 1)
-                    System.out.println("\nTest method 1:");
-                    if (line.contains("cf")) {
-                        System.out.println("Line contains 'cf'");
+                    // scan every line in file
+                    for (String line; (line = br.readLine()) != null;) {
+                        System.out.println("\nDATA: " + line); // PRINT RECORD
+                        
+                        String[] lineToArray;
+                        lineToArray = line.split(" "); // put data into array
+                        
+                        // put data objects into arraylist
+                        switch (lineToArray[0]) { // find flag in start of data
+                            case "cf": // Confectionary
+                                System.out.println("Flag is 'cf'");
+                                // validate data
+                                try {
+                                    stockList.add(new Confectionary
+                                        (Integer.parseInt(lineToArray[1]), 
+                                            lineToArray[2], 
+                                            Integer.parseInt(lineToArray[3]), 
+                                            lineToArray[4]));
+                                }
+                                catch (Exception e){
+                                    System.out.println("Couldn't create "
+                                            + "confectionary item");
+                                }
+                                break;
+                            case "sd": // Soft Drink
+                                System.out.println("Flag is 'sd'");
+                                break;
+                            default : // if no flag found
+                                System.out.println("Error: No flag found,"
+                                        + " item skipped.");
+                                break;
+                        }
                     }
-                    else if (line.contains("sd")) {
-                        System.out.println("Line contains 'sd'");
-                    }
+                    br.close(); // close file
                     
-                    // test flags in file (method test 2)
-                    System.out.println("\nTest method 2:");
-                    String[] lineToArray;
-                    lineToArray = line.split(" ");
-                    switch (lineToArray[0]) {
-                        case "cf":
-                            System.out.println("First string is 'cf'");
-                            break;
-                        case "sd":
-                            System.out.println("First string is 'sd'");
-                            break;
-                    }
-                    
-                    // test flags in file (method test 3)
-                    System.out.println("\nTest method 3:");
-                    if (line.startsWith("cf")) {
-                        System.out.println("First string starts with 'cf'");
-                    }
-                    else if (line.startsWith("sd")) {
-                        System.out.println("First string starts with 'sd'");
-                    }
-                    
-                    // test flags (method 4)
-                    System.out.println("\nTest method 4:");
-                    String flag = line.substring(0, 2);
-                    switch (flag) {
-                        case "cf":
-                            System.out.println("Flag string is 'cf'");
-                            break;
-                        case "sd":
-                            System.out.println("Flag string is 'sd'");
-                            break;
-                    }
+                    // print stock items in arraylist
+                    stockList.stream().forEach((i) -> {
+                        displayStockItem(i);
+                    });
                 }
-                
-                // distinguish stock type and add to array
-                
             }
         }
+    }
+    
+    // polymorphically process Stock items for print
+    public static void displayStockItem(Stock s) {
+        System.out.println(s);
     }
 }
