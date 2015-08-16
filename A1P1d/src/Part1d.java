@@ -43,11 +43,13 @@ public class Part1d {
                     System.out.println("\nTest method 2:");
                     String[] lineToArray;
                     lineToArray = line.split(" ");
-                    if (lineToArray[0].equals("cf")) {
-                        System.out.println("First string is 'cf'");
-                    }
-                    else if (lineToArray[0].equals("sd")) {
-                        System.out.println("First string is 'sd'");
+                    switch (lineToArray[0]) {
+                        case "cf":
+                            System.out.println("First string is 'cf'");
+                            break;
+                        case "sd":
+                            System.out.println("First string is 'sd'");
+                            break;
                     }
                     
                     // test flags in file (method test 3)
@@ -57,6 +59,18 @@ public class Part1d {
                     }
                     else if (line.startsWith("sd")) {
                         System.out.println("First string starts with 'sd'");
+                    }
+                    
+                    // test flags (method 4)
+                    System.out.println("\nTest method 4:");
+                    String flag = line.substring(0, 2);
+                    switch (flag) {
+                        case "cf":
+                            System.out.println("Flag string is 'cf'");
+                            break;
+                        case "sd":
+                            System.out.println("Flag string is 'sd'");
+                            break;
                     }
                 }
                 
