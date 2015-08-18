@@ -79,7 +79,9 @@ public class Part1a {
         // print array details
         System.out.format("%nThere were %s numbers entered.%n", 
                 currentArrayIndex);
-        System.out.format("Maximum = %s%n", maxNum);
-        System.out.format("Minimum = %s%n", minNum);
+        if (currentArrayIndex != 0) {
+            System.out.format("Maximum = %s%n", maxNum);
+            System.out.format("Minimum = %s%n", minNum);
+        }
     }
 }
