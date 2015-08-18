@@ -5,7 +5,6 @@
     Part 3a
     Purpose: Client voting
  */
-import java.io.IOException;
 import java.net.*;
 import java.util.Scanner;
 
@@ -21,6 +20,7 @@ public class Client {
         try {
             InetAddress server = InetAddress.getByName(args[0]);
 
+            // loop until correct vote entered (yes or no)
             do {
                 System.out.print("Enter \"yes\" or \"no\": "); // prompt for vote
                 userVote = sc.nextLine(); // console input to String
@@ -44,17 +44,16 @@ public class Client {
             while (!validVote);
             
             byte [] buff = userVote.getBytes();
-            
             DatagramPacket packet = 
                     new DatagramPacket(buff, buff.length, server, serverPort);
-            
             try (DatagramSocket sock = new DatagramSocket(clientPort)) {
                 sock.send(packet);
                 sock.close();
             }
         }
-        catch (IOException ioe) {
-            ioe.printStackTrace();
+        catch (Exception e) {
+            System.out.println("Could not start voting client.\n" 
+            + "Incorrect or no IP address given before starting program.");
         }
     }
 }
