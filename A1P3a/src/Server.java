@@ -27,6 +27,7 @@ public class Server {
                 while (true) {
                     boolean validVote = false;
                     
+                    // set up packet & socket
                     byte [] buff = new byte[100];
                     DatagramPacket packet =
                             new DatagramPacket(buff,buff.length);
