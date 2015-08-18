@@ -12,27 +12,26 @@ public class Server {
 
    public static void main(String [] args) {
         try {
-            System.out.println("Server operating on "
-                    + InetAddress.getLocalHost().getHostAddress());
+            System.out.println("Voting server "
+                    + InetAddress.getLocalHost().getHostAddress() + 
+                    " active on port " + serverPort);
             
-            DatagramSocket sock = new DatagramSocket(serverPort);
-
-            String data = "";
-            while (!data.equals("EXIT")) {
-
-            byte [] buff = new byte[100];
-
-            DatagramPacket packet =
-               new DatagramPacket(buff,buff.length);
-
-            sock.receive(packet);
-
-            data=new String(packet.getData(),0,packet.getLength());
-
-            System.out.println("Received: " + data);
+            try (DatagramSocket sock = new DatagramSocket(serverPort)) {
+                String data = "";
+                while (!data.equals("EXIT")) {
+                    
+                    byte [] buff = new byte[100];
+                    
+                    DatagramPacket packet =
+                            new DatagramPacket(buff,buff.length);
+                    
+                    sock.receive(packet);
+                    
+                    data=new String(packet.getData(),0,packet.getLength());
+                    
+                    System.out.println("Received: " + data);
+                }
             }
-
-         sock.close();
          }
         catch (Exception e) {
          e.printStackTrace();
