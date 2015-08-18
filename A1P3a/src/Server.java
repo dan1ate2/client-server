@@ -11,7 +11,7 @@ public class Server {
    private static final int serverPort = 2015;
 
    public static void main(String [] args) {
-        String data = "";
+        String data;
         int yesVote = 0;
         int noVote = 0;
 
