@@ -16,10 +16,32 @@ public class Client {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String userVote;
+        boolean validVote = false;
+        
         try {
             InetAddress server = InetAddress.getByName(args[0]);
-            System.out.print("Enter 'yes' or 'no': ");
-            userVote = sc.nextLine();
+
+            do {
+                System.out.print("Enter \"yes\" or \"no\": "); // prompt for vote
+                userVote = sc.nextLine(); // console input to String
+                userVote = userVote.toLowerCase(); // vote to lowercase
+
+                // validate user vote input
+                switch (userVote) {
+                    case "yes":
+                        System.out.println("Vote \"yes\" sent to " + args[0]);
+                        validVote = true;
+                        break;
+                    case "no":
+                        System.out.println("Vote \"no\" sent to " + args[0]);
+                        validVote = true;
+                        break;
+                    default:
+                        System.out.println("Error, an invalid vote was entered");
+                        break;
+                }
+            }  
+            while (!validVote);
             
             byte [] buff = userVote.getBytes();
             
