@@ -48,14 +48,4 @@ public class SoftDrink implements Stock{
     public int getPackageSize() {
         return packageSize;
     }
-    
-    // formatted output
-    @Override
-    public String toString() {
-        return "Item ID: " + getID() + 
-                "\nItem Description: " + getDescription() + 
-                "\nItem Quantity: " + number() + 
-                "\nItem Package Size: " + getPackageSize() + 
-                "\n";
-    }
 }

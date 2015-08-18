@@ -49,14 +49,4 @@ public class Confectionary implements Stock{
     public String getExpiry() {
         return itemExpiry;
     }
-    
-    // formatted output
-    @Override
-    public String toString() {
-        return "Item ID: " + getID() + 
-                "\nItem Description: " + getDescription() + 
-                "\nItem Quantity: " + number() + 
-                "\nItem Expiry: " + getExpiry() + 
-                "\n";
-    }
 }

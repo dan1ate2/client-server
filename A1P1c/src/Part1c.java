@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Part1c {
 
     public static void main(String[] args) {
-        
         // create array list of stock
         ArrayList<Stock> stockList = new ArrayList();
         stockList.add(new Confectionary
@@ -29,7 +28,7 @@ public class Part1c {
     
     // polymorphically process Stock items for print
     public static void displayStockItem(Stock s) {
-        System.out.println(s);
+        System.out.println(s.getID() + ", " + s.getDescription());
     }
     
 }

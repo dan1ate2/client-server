@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Form - ISY00246 - Assignment 1, Part 2</title>
+</head>
+
+<body>
+	<h1>Assignmment 1, Part 2 (Form) - ISY00246</h1>
+	<p>Dan Hogan - 22108261</p>
+	<form name="f_data" action="http://spike.scu.edu.au/cgi-bin/Assignment1_2/Assignment1_2" method="post" onsubmit="return PrintAll()">
+		<label for="name">Name: </label>
+		<input type="text" name="name" id="name"><br>
+		<label for="email">Email: </label>
+		<input type="text" name="email" id="email"><br>
+		<label for="privacy">Privacy?</label>
+		<input type="hidden" value="0" name="privacy" />
+		<!-- hidden 'privacy' overridden when 'privacy' checkbox checked (true) -->
+		<input type="checkbox" name="privacy" id="privacy" value="1"><br>
+		<label for="age">Age: </label>
+		<input type="text" name="age" id="age"><br>
+		<br>
+		<input type="reset" value="Clear">
+		<input type="submit" name="action" value="PrintAll"/>
+		<input type="submit" name="action" value="Search"/>
+		<input type="submit" name="action" value="Add"/>
+		<input type="submit" name="action" value="Remove"/>
+	</form>
+</body>
+</html>

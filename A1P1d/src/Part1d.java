@@ -46,7 +46,7 @@ public class Part1d {
                             lineNumber++; // update line number read in file
                             
                             // add to temp arraylist
-                            if (!"".equals(line)) { // do if not blank line
+                            if (!"".equals(line)) { // add if not blank line
                                 stockItemElements.add(line);
                             }
                             line = br.readLine(); // read next line
@@ -96,7 +96,7 @@ public class Part1d {
                                         + "item above line " + lineNumber + 
                                         " in file.");
                                     break;
-                            } // end of switch
+                            } // end of 'switch' (identifying & validating data)
                         } // end 'if statement' (putting data into arraylist)
                     } // end 'for loop' (scanning lines of file)
                     br.close(); // close file
@@ -116,7 +116,7 @@ public class Part1d {
                             displayStockItem(i);
                         }
                     });
-                }
+                } // end of 'try buffered reader'
             } // end of 'if file exists'
             else {
                 // error message if filename doesn't exist
