@@ -14,7 +14,7 @@ public class NameServer {
     
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
-        String receiveData = "";
+        String receiveData;
         String sendData;
         
         System.out.println("Server operating on "
@@ -36,22 +36,16 @@ public class NameServer {
                         new BufferedReader(
                                 new InputStreamReader(sock.getInputStream()));
                 
-                while (!"exit".equals(receiveData)) {
-                    // TEST RECEIVING DATA
-                    receiveData = inStream.readLine();
-                    System.out.println("Received: "+receiveData);
-
-                    // TEST FOR EXIT REQUEST
-                    if ("exit".equals(receiveData)) {
-                        sock.close(); // close socket
-                    }
-                    // TEST SENDING BACK TO CLIENT
-                    else {
-                        sendData = "What up??";
-                        outStream.write(sendData);
-                        outStream.flush();
-                    }
-                }
+                // TEST RECEIVING DATA
+                receiveData = inStream.readLine();
+                System.out.println("Received: "+receiveData);
+                
+                // TEST SENDING BACK TO CLIENT
+                sendData = "What up??";
+                outStream.write(sendData);
+                outStream.flush();
+                
+                sock.close(); // close socket
             }
         } // end while
     } // end main method

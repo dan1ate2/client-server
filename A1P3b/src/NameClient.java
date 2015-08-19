@@ -15,7 +15,7 @@ public class NameClient {
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
         
-        String inConsoleString = "";
+        String inConsoleString;
         String inServerString;
         
         InetAddress server = InetAddress.getByName(args[0]); // server address
@@ -36,7 +36,6 @@ public class NameClient {
                     new BufferedReader(
                             new InputStreamReader(System.in));
             
-            while (!"exit".equals(inConsoleString)) {
                 // TEST GET INPUT
                 System.out.print("Enter something: ");
                 inConsoleString = inConsole.readLine();
@@ -45,16 +44,11 @@ public class NameClient {
                 outStream.println(inConsoleString);
                 outStream.flush();
 
-                // test for exit
-                if ("exit".equals(inConsoleString)) {
-                    sock.close(); // close socket
-                }
-                else {
-                // receive reply for server
+                // TEST RECEIVE FROM SERVER
                 inServerString = inStream.readLine();
                 System.out.println("Server said: "+inServerString);
-                }
-            }
+            
+            sock.close(); // close socket
         } // end try socket
     } // end main method
     
