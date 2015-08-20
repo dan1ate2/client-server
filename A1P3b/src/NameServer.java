@@ -70,35 +70,36 @@ public class NameServer {
     
         // initiates menu command request
         public static String menuCommand(int i, String cInput) {
-            String output = "";
+            String result;
             
             switch (i) {
                 case 1: // add a name
-                    output = "[1]Server adds a name";
+                    result = "[1]Server adds a name";
                     break;
                 case 2: // remove a name
-                    output = "[2]Server removes a name";
+                    result = "[2]Server removes a name";
                     break;
                 case 3: // list all names
-                    output = "[3]Server lists all names";
+                    result = "[3]Server lists all names";
                     break;
                 case 4: // check if a name recorded
-                    output = "[4]Server searches for name";
+                    result = "[4]Server searches for name";
                     break;
                 default:
-                    System.out.println("Error finding correct menu option.");
+                    result = "Error finding correct menu option.";
                     break;
             }
-            return output;
+            return result;
         } // end menuCommand
         
-        // specific menu option prompt [1-4]
+        // get prompt for user chosen menu option [1-4]
         public static String promptClient(int menuOpt){
-            String prompt = "";
+            String prompt;
             
                 switch (menuOpt) {
                 case 1: // add a name
-                    prompt = "Please provide the name to add and press enter.";
+                    prompt = "Please provide the name to add and press enter.\n"
+                            +"*Name can have spaces";
                     break;
                 case 2: // remove a name
                     prompt = "Please provide the name to remove and press enter.\n"
@@ -115,7 +116,6 @@ public class NameServer {
                     prompt = "Error finding correct menu option.";
                     break;
             }
-            
             return prompt;
         }
     
