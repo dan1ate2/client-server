@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class NameServer {
     private static final int SERVER_PORT = 2015;
-    private static ArrayList namesList = new ArrayList(); // LOOKUP CASE FORMAT FOR GLOBAL VARIABLE (IE CAMELCASE)
+    private static ArrayList<String> namesList = new ArrayList(); // LOOKUP CASE FORMAT FOR GLOBAL VARIABLE (IE CAMELCASE)
     
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
@@ -70,17 +70,24 @@ public class NameServer {
     
         // initiates menu command request
         public static String menuCommand(int i, String cInput) {
-            String result;
+            String result = "";
             
             switch (i) {
                 case 1: // add a name
-                    result = "[1]Server adds a name";
+                    namesList.add(cInput);
+                    result = "Name \""+cInput+"\" added to list.";
                     break;
                 case 2: // remove a name
-                    result = "[2]Server removes a name";
+                    namesList.removeIf(cInput::equals);
+                    // :: = method reference - ClassName::MethodName (Java 8)
+                    result = "\""+cInput+"\""+" removed from list.";
                     break;
                 case 3: // list all names
-                    result = "[3]Server lists all names";
+                    // result = namesList.toString();
+                    for (String s : namesList)
+                        {
+                            result += s + "\n";
+                        }
                     break;
                 case 4: // check if a name recorded
                     result = "[4]Server searches for name";
