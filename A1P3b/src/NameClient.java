@@ -37,17 +37,19 @@ public class NameClient {
                     new BufferedReader(
                             new InputStreamReader(System.in));
             
+            do {
             displayMenu();
             inConsoleString = inConsole.readLine(); // get user option/input
+            } while (!validateMenuOption(inConsoleString));
             
-            // validate menu option
-            do {
-                validOption = validateMenuOption(inConsoleString);
-                if (!validOption) {
-                    displayMenu();
-                    inConsoleString = inConsole.readLine(); // get user option/input
-                }
-            } while (!validOption);
+//            // validate menu option
+//            do {
+//                validOption = validateMenuOption(inConsoleString);
+//                if (!validOption) {
+//                    displayMenu();
+//                    inConsoleString = inConsole.readLine(); // get user option/input
+//                }
+//            } while (!validOption);
             
             while (!inConsoleString.equals("5")) { // loop until exit option
                 outStream.println(inConsoleString); // set console input for send
@@ -55,8 +57,11 @@ public class NameClient {
                 inServerString = inStream.readLine(); // get from server
                 System.out.println("Server received: "+inServerString);
 
-                displayMenu(); // displays menu
-                inConsoleString = inConsole.readLine(); // get user option/input
+                do {
+                    displayMenu();
+                    inConsoleString = inConsole.readLine(); // get user option/input
+                } while (!validateMenuOption(inConsoleString));
+
             }
             
             outStream.println();   // send blank line to tell server we are done
@@ -79,16 +84,16 @@ public class NameClient {
         
         try {
             if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 5){
-                System.out.println("Menu option not valid.\n"
-                        +"Please type a single digit for menu option.");
+                System.out.println("**Error: Menu option not valid.\n"
+                        +"  Please type a single digit for menu option.");
             } 
             else {
                 valid = true;
             }
         }
         catch (NumberFormatException nfe) {
-            System.out.println("Error, only a single number can be input.\n"
-            +"Please type a single digit for menu option.");
+            System.out.println("**Error: Only a single number can be input.\n"
+            +"  Please type a single digit for menu option.");
         }
   
         return valid;
