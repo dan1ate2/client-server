@@ -16,7 +16,6 @@ public class NameServer {
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
         String inString = "";
-        String outString;
         
         System.out.println("Server operating on "
             +InetAddress.getLocalHost().getHostAddress()
@@ -44,24 +43,24 @@ public class NameServer {
                                 new InputStreamReader(sock.getInputStream()));
                 
             // CLIENT COMMUNICATION
-            
-            while (!inString.equals("5")) { // loop until 5 (exit option) is sent
-                inString = inStream.readLine(); // read first input from client
+            while (!inString.equals("5")) { // loop until exit option
+                inString = inStream.readLine(); // read menu option from client
                 int menuOption = Integer.parseInt(inString); // set option number
-                System.out.println("Client said: "+inString);
+                System.out.println("Client said: "+inString); // TESTING ONLY
                 
-                outStream.writeObject(promptClient(menuOption)); // prepare prompt
-                outStream.flush(); // send to client
-                
-                inString = inStream.readLine(); // read input from client
-                outStream.writeObject(menuCommand(menuOption, inString)); // send answer to client
-                outStream.flush(); // send to client
-                
-//                outStream.println(inString);
-//                outStream.flush();
-//                inString = inStream.readLine(); // read input from client
+                if (!inString.equals("5")) {
+                    // prompt client for name
+                    outStream.writeObject(promptClient(menuOption));
+                    outStream.flush();
+
+                    inString = inStream.readLine(); // read input from client
+                    
+                    // send result to client
+                    outStream.writeObject(menuCommand(menuOption, inString));
+                    outStream.flush();
+                }
             }
-            
+            // close connection to client
             System.out.println("Closed connection for "
                 +sock.getInetAddress().getHostAddress());
             sock.close();
