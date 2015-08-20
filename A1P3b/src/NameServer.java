@@ -16,80 +16,85 @@ public class NameServer {
     private static List<String> namesList = new ArrayList(); // LOOKUP CASE FORMAT FOR GLOBAL VARIABLE (IE CAMELCASE)
     
     public static void main(String[] args) 
-            throws UnknownHostException, IOException {
+            throws UnknownHostException, IOException{
         String inString = "";
         
         System.out.println("Server operating on "
             +InetAddress.getLocalHost().getHostAddress()
-            +" on port "+SERVER_PORT);
+            +" on port "+SERVER_PORT+"\n");
         
         // set up server socket
         ServerSocket ssock = new ServerSocket(SERVER_PORT);
         
         getFileData(); // load file into array
         
-        while (true) {
-            // wait for client input
-            try (Socket sock = ssock.accept()) {
-                System.out.println(sock.getInetAddress().getHostAddress() 
-                    + " is now connected");
-                
-                // create in and out streams
-                ObjectOutputStream outStream = 
-                        new ObjectOutputStream(sock.getOutputStream());
-                BufferedReader inStream =
-                        new BufferedReader(
-                                new InputStreamReader(sock.getInputStream()));
-                
-            // CLIENT COMMUNICATION
-            while (!inString.equals("5")) { // loop until exit option
-                inString = inStream.readLine(); // read menu option from client
-                int menuOption = Integer.parseInt(inString); // set menu option
-                
-                System.out.println("Client said: "+inString); // TESTING ONLY
-                
-                if (!inString.equals("5")) {
-                    // prompt client for name
-                    outStream.writeObject(promptClient(menuOption));
-                    outStream.flush();
+            while (true) {
+                // wait for client input
+                try (Socket sock = ssock.accept()) {
+                    System.out.println(sock.getInetAddress().getHostAddress() 
+                        + " is now connected");
 
-                    inString = inStream.readLine(); // read input from client
-                    
-                    // send result to client
-                    outStream.writeObject(menuCommand(menuOption, inString));
-                    outStream.flush();
+                    // create in and out streams
+                    ObjectOutputStream outStream = 
+                            new ObjectOutputStream(sock.getOutputStream());
+                    BufferedReader inStream =
+                            new BufferedReader(
+                                    new InputStreamReader(sock.getInputStream()));
+
+                // CLIENT COMMUNICATION
+                while (!inString.equals("5")) { // loop until exit option
+                    inString = inStream.readLine(); // read menu option from client
+                    int menuOption = Integer.parseInt(inString); // set menu option
+
+                    if (!inString.equals("5")) {
+                        // prompt client for name
+                        outStream.writeObject(promptClient(menuOption));
+                        outStream.flush();
+
+                        inString = inStream.readLine(); // read input from client
+
+                        // send result to client
+                        outStream.writeObject(menuCommand(menuOption, inString));
+                        outStream.flush();
+                    }
                 }
-            }
-            // close connection to client
-            System.out.println("Closed connection for "
-                +sock.getInetAddress().getHostAddress());
-            inString = ""; // reset for next connection
-            sock.close(); // close socket
-            saveToFile(); // update names file
-            } // end try socket
-        } // end while
-        
-        
+                // close connection to client
+                System.out.println("Closed connection for "
+                    +sock.getInetAddress().getHostAddress());
+                inString = ""; // reset for next connection
+                sock.close(); // close socket
+
+                // update names file
+                saveToFile();
+                System.out.println("Updated/saved names file.");
+                } // end try socket
+                catch (SocketException se) {
+                    saveToFile();
+                    System.out.println("Connection lost. Names file saved.");
+                }
+            } // end while
     } // end main method
     
         // load names file
         public static void getFileData() throws IOException {
         File file = new File("src/names.txt");
 
-        // load file data
-        if (file.exists()) {
-            try (BufferedReader br = 
-                    new BufferedReader(
-                            new FileReader(file))) {
-                    
-                // add every line (name) in file to list
-                for (String line; (line = br.readLine()) != null;) {
-                    namesList.add(line);
-                }
-                
-                br.close(); // close buff
-            } // end try buff
-        } // end if
+            // load file data
+            if (file.exists()) {
+                try (BufferedReader br = 
+                        new BufferedReader(
+                                new FileReader(file))) {
+
+                    // add every line (name) in file to list
+                    for (String line; (line = br.readLine()) != null;) {
+                        if (!line.equals("")) {
+                            namesList.add(line);
+                        }
+                    }
+
+                    br.close(); // close buff
+                } // end try buff
+            } // end if
         }
         
         // saves the list to a file (overwrites previous)
@@ -97,33 +102,40 @@ public class NameServer {
             File file = new File("src/names.txt");
             try (FileWriter fw = new FileWriter(file, false)) {
                 for (String s : namesList) {
-                    fw.write(s+"\n");
+                    if (!s.equals("")) {
+                        fw.write(s+"\n");
+                    }
                 }
             }
         }
 
         // initiates menu command request
         public static String menuCommand(int i, String cInput) {
-            String result = "";
+            String result;
             
             switch (i) {
                 case 1: // add a name
-                    namesList.add(cInput);
-                    result = "Name \""+cInput+"\" added to list.";
+                    if (!cInput.trim().equals("")) { // if not empty string
+                        namesList.add(cInput);
+                        result = "Name \""+cInput+"\" added to list.";
+                    }
+                    else {
+                        result = "** Error, no name entered.";
+                    }
                     break;
                 case 2: // remove a name
-                    if (namesList.removeIf(cInput::equals)) {
+                    if (namesList.removeIf(cInput::equals)) { // remove if match
                     // :: = method reference - ClassName::MethodName (Java 8) BOOM!
                        result = "\""+cInput+"\""+" removed from list."; 
                     }
                     else {
-                        result = "\""+cInput+"\""+" not found.";
+                        result = "** \""+cInput+"\""+" not found.";
                     }
                     break;
                 case 3: // list all names
                     // iterate through list, concatenate, new line
-                    for (String s : namesList)
-                        {
+                    result = "";
+                    for (String s : namesList) {
                             result += s + "\n";
                         }
                     break;
@@ -132,11 +144,11 @@ public class NameServer {
                         result = "\""+cInput+"\""+" is recorded in list.";
                     }
                     else {
-                        result = "\""+cInput+"\""+" not found in list.";
+                        result = "** \""+cInput+"\""+" not found in list.";
                     } 
                     break;
                 default:
-                    result = "Error finding correct menu option.";
+                    result = "** Error finding correct menu option.";
                     break;
             } // end switch
             return result;
@@ -149,18 +161,18 @@ public class NameServer {
                 switch (menuOpt) {
                 case 1: // add a name
                     prompt = "Please provide the name to ADD and press enter.\n"
-                            +"*Name can have spaces";
+                        +"* Name can have spaces";
                     break;
                 case 2: // remove a name
                     prompt = "Please provide the name to REMOVE and press enter.\n"
-                        +"*Name can have spaces";
+                        +"* Name can have spaces";
                     break;
                 case 3: // list all names
                     prompt = "Press enter to RETRIEVE all names";
                     break;
                 case 4: // check if a name recorded
                     prompt = "Please provide the name to SEARCH and press enter.\n"
-                        +"*Name can have spaces";
+                        +"* Name can have spaces";
                     break;
                 default:
                     prompt = "Error finding correct menu option.";
