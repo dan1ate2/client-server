@@ -38,18 +38,9 @@ public class NameClient {
                             new InputStreamReader(System.in));
             
             do {
-            displayMenu();
+            displayMenu(); // display menu
             inConsoleString = inConsole.readLine(); // get user option/input
-            } while (!validateMenuOption(inConsoleString));
-            
-//            // validate menu option
-//            do {
-//                validOption = validateMenuOption(inConsoleString);
-//                if (!validOption) {
-//                    displayMenu();
-//                    inConsoleString = inConsole.readLine(); // get user option/input
-//                }
-//            } while (!validOption);
+            } while (!validateMenuOption(inConsoleString)); // check valid input
             
             while (!inConsoleString.equals("5")) { // loop until exit option
                 outStream.println(inConsoleString); // set console input for send
@@ -58,16 +49,15 @@ public class NameClient {
                 System.out.println("Server received: "+inServerString);
 
                 do {
-                    displayMenu();
+                    displayMenu(); // display menu
                     inConsoleString = inConsole.readLine(); // get user option/input
-                } while (!validateMenuOption(inConsoleString));
-
-            }
+                } while (!validateMenuOption(inConsoleString)); // check valid input
+            } // end while
             
-            outStream.println();   // send blank line to tell server we are done
-            outStream.flush(); // send to server
+            outStream.println();   // send blank line to kill server connection
+            outStream.flush(); // send kill request to server
             sock.close(); // close socket
-        } // end try socket // end try socket // end try socket // end try socket
+        } // end try socket
     } // end main method
     
     // display the main menu
@@ -78,10 +68,9 @@ public class NameClient {
                 +"Enter selection [1-5]:");
     }
     
-    //validate menu choice
+    // validate menu choice input from user/console
     public static boolean validateMenuOption(String input) {
         boolean valid = false;
-        
         try {
             if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 5){
                 System.out.println("**Error: Menu option not valid.\n"
@@ -95,7 +84,6 @@ public class NameClient {
             System.out.println("**Error: Only a single number can be input.\n"
             +"  Please type a single digit for menu option.");
         }
-  
         return valid;
     }
     
