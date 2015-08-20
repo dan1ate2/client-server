@@ -3,7 +3,8 @@
     ISY00246
     Assignment 1
     Part 3b
-    Purpose: Server
+    Purpose: Server app that reads/writes list of names to/from file.
+        Allows client to connect and modify.
  */
 import java.io.*;
 import java.net.*;
@@ -45,7 +46,8 @@ public class NameServer {
             // CLIENT COMMUNICATION
             while (!inString.equals("5")) { // loop until exit option
                 inString = inStream.readLine(); // read menu option from client
-                int menuOption = Integer.parseInt(inString); // set option number
+                int menuOption = Integer.parseInt(inString); // set menu option
+                
                 System.out.println("Client said: "+inString); // TESTING ONLY
                 
                 if (!inString.equals("5")) {
@@ -78,24 +80,33 @@ public class NameServer {
                     result = "Name \""+cInput+"\" added to list.";
                     break;
                 case 2: // remove a name
-                    namesList.removeIf(cInput::equals);
-                    // :: = method reference - ClassName::MethodName (Java 8)
-                    result = "\""+cInput+"\""+" removed from list.";
+                    if (namesList.removeIf(cInput::equals)) {
+                    // :: = method reference - ClassName::MethodName (Java 8) BOOM!
+                       result = "\""+cInput+"\""+" removed from list."; 
+                    }
+                    else {
+                        result = "\""+cInput+"\""+" not found.";
+                    }
                     break;
                 case 3: // list all names
-                    // result = namesList.toString();
+                    // iterate through list, concatenate, new line
                     for (String s : namesList)
                         {
                             result += s + "\n";
                         }
                     break;
                 case 4: // check if a name recorded
-                    result = "[4]Server searches for name";
+                    if (namesList.contains(cInput)) {
+                        result = "\""+cInput+"\""+" is recorded in list.";
+                    }
+                    else {
+                        result = "\""+cInput+"\""+" not found in list.";
+                    } 
                     break;
                 default:
                     result = "Error finding correct menu option.";
                     break;
-            }
+            } // end switch
             return result;
         } // end menuCommand
         
@@ -105,25 +116,25 @@ public class NameServer {
             
                 switch (menuOpt) {
                 case 1: // add a name
-                    prompt = "Please provide the name to add and press enter.\n"
+                    prompt = "Please provide the name to ADD and press enter.\n"
                             +"*Name can have spaces";
                     break;
                 case 2: // remove a name
-                    prompt = "Please provide the name to remove and press enter.\n"
+                    prompt = "Please provide the name to REMOVE and press enter.\n"
                         +"*Name can have spaces";
                     break;
                 case 3: // list all names
-                    prompt = "Press enter to retrieve all names";
+                    prompt = "Press enter to RETRIEVE all names";
                     break;
                 case 4: // check if a name recorded
-                    prompt = "Please provide the name to search and press enter.\n"
+                    prompt = "Please provide the name to SEARCH and press enter.\n"
                         +"*Name can have spaces";
                     break;
                 default:
                     prompt = "Error finding correct menu option.";
                     break;
-            }
+            } // end switch
             return prompt;
-        }
+        } // end promptClient
     
 } // end class NameServer

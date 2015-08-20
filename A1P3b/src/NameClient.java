@@ -3,7 +3,8 @@
     ISY00246
     Assignment 1
     Part 3b
-    Purpose: Client
+    Purpose: Client app that allows connection to server app and read/modify
+        list of names that are recorded in a file.
  */
 import java.io.*;
 import java.net.*;
@@ -60,6 +61,7 @@ public class NameClient {
                 }
             } while (!inConsoleString.equals("5")); // loop until exit option
             
+            System.out.println("Goodbye");
             sock.close(); // close socket
         } // end try socket
     } // end main method
