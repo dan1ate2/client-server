@@ -13,12 +13,9 @@ public class NameClient {
     
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
-        
         String inConsoleString;
         String inServerString;
-        boolean validOption;
-        
-        
+
         InetAddress server = InetAddress.getByName(args[0]); // server address
         try (Socket sock = new Socket(server, SERVER_PORT)) { // create socket
             System.out.println("Connected to " + args[0]); // print connection
@@ -37,25 +34,20 @@ public class NameClient {
                     new BufferedReader(
                             new InputStreamReader(System.in));
             
+            // server program interaction
             do {
-            displayMenu(); // display menu
-            inConsoleString = inConsole.readLine(); // get user option/input
-            } while (!validateMenuOption(inConsoleString)); // check valid input
-            
-            while (!inConsoleString.equals("5")) { // loop until exit option
-                outStream.println(inConsoleString); // set console input for send
-                outStream.flush(); // send to server
-                inServerString = inStream.readLine(); // get from server
-                System.out.println("Server received: "+inServerString);
-
                 do {
                     displayMenu(); // display menu
                     inConsoleString = inConsole.readLine(); // get user option/input
                 } while (!validateMenuOption(inConsoleString)); // check valid input
-            } // end while
+                
+                // send request to server
+                outStream.println(inConsoleString); // set console input for send
+                outStream.flush(); // send to server
+                inServerString = inStream.readLine(); // get from server
+                System.out.println("Server received: "+inServerString);
+            } while (!inConsoleString.equals("5")); // loop until exit option
             
-            outStream.println();   // send blank line to kill server connection
-            outStream.flush(); // send kill request to server
             sock.close(); // close socket
         } // end try socket
     } // end main method
@@ -63,7 +55,7 @@ public class NameClient {
     // display the main menu
     public static void displayMenu() {
         System.out.print("\nName Saver Server Menu\n\n"
-                +"1. Add a name\n2. Remove a name\n3. List all names"
+                +"1. Add a name\n2. Remove a name\n3. List all names\n"
                 +"4. Check if name recorded\n5. Exit\n\n"
                 +"Enter selection [1-5]:");
     }
@@ -73,8 +65,8 @@ public class NameClient {
         boolean valid = false;
         try {
             if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 5){
-                System.out.println("**Error: Menu option not valid.\n"
-                        +"  Please type a single digit for menu option.");
+                System.out.println("**Error: Menu option not found.\n"
+                        +"  Please type a single digit [1-5] for menu option.");
             } 
             else {
                 valid = true;
@@ -82,7 +74,7 @@ public class NameClient {
         }
         catch (NumberFormatException nfe) {
             System.out.println("**Error: Only a single number can be input.\n"
-            +"  Please type a single digit for menu option.");
+            +"  Please type a single digit [1-5] for menu option.");
         }
         return valid;
     }
