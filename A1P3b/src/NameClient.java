@@ -12,7 +12,7 @@ public class NameClient {
     private static final int SERVER_PORT = 2015;
     
     public static void main(String[] args) 
-            throws UnknownHostException, IOException {
+            throws UnknownHostException, IOException, ClassNotFoundException {
         String inConsoleString;
         String inServerString;
 
@@ -21,13 +21,12 @@ public class NameClient {
             System.out.println("Connected to " + args[0]); // print connection
             
             // output to server
-            PrintStream outStream = 
-                    new PrintStream(sock.getOutputStream()); 
+            PrintWriter outStream = 
+                    new PrintWriter(sock.getOutputStream()); 
             
             // input from server
-            BufferedReader inStream =
-                    new BufferedReader(
-                            new InputStreamReader(sock.getInputStream()));
+            ObjectInputStream inStream =
+                    new ObjectInputStream(sock.getInputStream());
             
             // user console input
             BufferedReader inConsole =
@@ -45,7 +44,7 @@ public class NameClient {
                 outStream.flush(); // send chosen option to server
                 
                 // server response
-                inServerString = inStream.readLine(); // get response from server
+                inServerString = inStream.readObject().toString(); // object to string
                 System.out.println(inServerString); // prints server option prompt
                 
                 // send name information to server
@@ -54,7 +53,7 @@ public class NameClient {
                 outStream.flush(); // send name to server
                 
                 // server response
-                inServerString = inStream.readLine(); // get response from server
+                inServerString = inStream.readObject().toString(); // object to string
                 System.out.println(inServerString); // prints server option answer
             } while (!inConsoleString.equals("5")); // loop until exit option
             

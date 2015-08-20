@@ -37,8 +37,8 @@ public class NameServer {
                     + " is now connected");
                 
                 // create in and out streams
-                PrintWriter outStream = 
-                        new PrintWriter(sock.getOutputStream());
+                ObjectOutputStream outStream = 
+                        new ObjectOutputStream(sock.getOutputStream());
                 BufferedReader inStream =
                         new BufferedReader(
                                 new InputStreamReader(sock.getInputStream()));
@@ -50,11 +50,11 @@ public class NameServer {
                 int menuOption = Integer.parseInt(inString); // set option number
                 System.out.println("Client said: "+inString);
                 
-                outStream.println(promptClient(menuOption)); // prepare prompt
+                outStream.writeObject(promptClient(menuOption)); // prepare prompt
                 outStream.flush(); // send to client
                 
                 inString = inStream.readLine(); // read input from client
-                outStream.println(menuCommand(menuOption, inString)); // send answer to client
+                outStream.writeObject(menuCommand(menuOption, inString)); // send answer to client
                 outStream.flush(); // send to client
                 
 //                outStream.println(inString);
