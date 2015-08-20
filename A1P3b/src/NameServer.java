@@ -9,23 +9,33 @@
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NameServer {
     private static final int SERVER_PORT = 2015;
-    private static ArrayList<String> namesList = new ArrayList(); // LOOKUP CASE FORMAT FOR GLOBAL VARIABLE (IE CAMELCASE)
+    private static List<String> namesList = new ArrayList(); // LOOKUP CASE FORMAT FOR GLOBAL VARIABLE (IE CAMELCASE)
     
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
         String inString = "";
+        File file = new File("src/names.txt");
         
         System.out.println("Server operating on "
             +InetAddress.getLocalHost().getHostAddress()
             +" on port "+SERVER_PORT);
         
-        // set up data
-        namesList.add("Dan");
-        namesList.add("Jess");
-        namesList.add("Bob Marley");
+        // load file data
+        if (file.exists()) {
+            try (BufferedReader br = 
+                    new BufferedReader(
+                            new FileReader(file))) {
+                    
+                // add every line (name) in file to list
+                for (String line; (line = br.readLine()) != null;) {
+                    namesList.add(line);
+                }
+            } // end try buff
+        } // end if
         
         // set up server socket
         ServerSocket ssock = new ServerSocket(SERVER_PORT);
