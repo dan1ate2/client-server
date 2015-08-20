@@ -18,30 +18,18 @@ public class NameServer {
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
         String inString = "";
-        File file = new File("src/names.txt");
         
         System.out.println("Server operating on "
             +InetAddress.getLocalHost().getHostAddress()
             +" on port "+SERVER_PORT);
         
-        // load file data
-        if (file.exists()) {
-            try (BufferedReader br = 
-                    new BufferedReader(
-                            new FileReader(file))) {
-                    
-                // add every line (name) in file to list
-                for (String line; (line = br.readLine()) != null;) {
-                    namesList.add(line);
-                }
-            } // end try buff
-        } // end if
-        
         // set up server socket
         ServerSocket ssock = new ServerSocket(SERVER_PORT);
         
-        // take input
+        getFileData(); // load file into array
+        
         while (true) {
+            // wait for client input
             try (Socket sock = ssock.accept()) {
                 System.out.println(sock.getInetAddress().getHostAddress() 
                     + " is now connected");
@@ -75,11 +63,45 @@ public class NameServer {
             // close connection to client
             System.out.println("Closed connection for "
                 +sock.getInetAddress().getHostAddress());
-            sock.close();
+            inString = ""; // reset for next connection
+            sock.close(); // close socket
+            saveToFile(); // update names file
             } // end try socket
         } // end while
+        
+        
     } // end main method
     
+        // load names file
+        public static void getFileData() throws IOException {
+        File file = new File("src/names.txt");
+
+        // load file data
+        if (file.exists()) {
+            try (BufferedReader br = 
+                    new BufferedReader(
+                            new FileReader(file))) {
+                    
+                // add every line (name) in file to list
+                for (String line; (line = br.readLine()) != null;) {
+                    namesList.add(line);
+                }
+                
+                br.close(); // close buff
+            } // end try buff
+        } // end if
+        }
+        
+        // saves the list to a file (overwrites previous)
+        public static void saveToFile() throws IOException {
+            File file = new File("src/names.txt");
+            try (FileWriter fw = new FileWriter(file, false)) {
+                for (String s : namesList) {
+                    fw.write(s+"\n");
+                }
+            }
+        }
+
         // initiates menu command request
         public static String menuCommand(int i, String cInput) {
             String result = "";
