@@ -34,18 +34,28 @@ public class NameClient {
                     new BufferedReader(
                             new InputStreamReader(System.in));
             
-            // server program interaction
+            // SERVER COMMUNICATION
             do {
                 do {
                     displayMenu(); // display menu
                     inConsoleString = inConsole.readLine(); // get user option/input
                 } while (!validateMenuOption(inConsoleString)); // check valid input
-                
                 // send request to server
                 outStream.println(inConsoleString); // set console input for send
-                outStream.flush(); // send to server
-                inServerString = inStream.readLine(); // get from server
-                System.out.println("Server received: "+inServerString);
+                outStream.flush(); // send chosen option to server
+                
+                // server response
+                inServerString = inStream.readLine(); // get response from server
+                System.out.println(inServerString); // prints server option prompt
+                
+                // send name information to server
+                inConsoleString = inConsole.readLine(); // get user request (name)
+                outStream.println(inConsoleString); // set console input for send
+                outStream.flush(); // send name to server
+                
+                // server response
+                inServerString = inStream.readLine(); // get response from server
+                System.out.println(inServerString); // prints server option answer
             } while (!inConsoleString.equals("5")); // loop until exit option
             
             sock.close(); // close socket

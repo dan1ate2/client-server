@@ -15,7 +15,7 @@ public class NameServer {
     
     public static void main(String[] args) 
             throws UnknownHostException, IOException {
-        String inString;
+        String inString = "";
         String outString;
         
         System.out.println("Server operating on "
@@ -37,20 +37,26 @@ public class NameServer {
                     + " is now connected");
                 
                 // create in and out streams
-                PrintWriter outStream = new PrintWriter(sock.getOutputStream());
+                PrintWriter outStream = 
+                        new PrintWriter(sock.getOutputStream());
                 BufferedReader inStream =
                         new BufferedReader(
                                 new InputStreamReader(sock.getInputStream()));
                 
             // CLIENT COMMUNICATION
-            inString = inStream.readLine(); // read first input from client
+            
             while (!inString.equals("5")) { // loop until 5 (exit option) is sent
+                inString = inStream.readLine(); // read first input from client
                 int menuOption = Integer.parseInt(inString); // set option number
+                System.out.println("Client said: "+inString);
                 
-                outStream.println(promptClient(menuOption));
+                outStream.println(promptClient(menuOption)); // prepare prompt
+                outStream.flush(); // send to client
+                
                 inString = inStream.readLine(); // read input from client
-                outStream.println(menuCommand(menuOption, inString)); // send request to client
-//                System.out.println("Client said: "+inString);
+                outStream.println(menuCommand(menuOption, inString)); // send answer to client
+                outStream.flush(); // send to client
+                
 //                outStream.println(inString);
 //                outStream.flush();
 //                inString = inStream.readLine(); // read input from client
@@ -93,8 +99,7 @@ public class NameServer {
             
                 switch (menuOpt) {
                 case 1: // add a name
-                    prompt = "Please provide the name to add and press enter.\n"
-                        +"*Name can have spaces";
+                    prompt = "Please provide the name to add and press enter.";
                     break;
                 case 2: // remove a name
                     prompt = "Please provide the name to remove and press enter.\n"
