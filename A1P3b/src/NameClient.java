@@ -34,27 +34,30 @@ public class NameClient {
                             new InputStreamReader(System.in));
             
             // SERVER COMMUNICATION
-            do {
-                do {
-                    displayMenu(); // display menu
-                    inConsoleString = inConsole.readLine(); // get user option/input
-                } while (!validateMenuOption(inConsoleString)); // check valid input
+            do { // loop through server communication until exit option
+                do { // display menu, request option while non/no valid option
+                    displayMenu();
+                    inConsoleString = inConsole.readLine();
+                } while (!validateMenuOption(inConsoleString));
+                
                 // send request to server
-                outStream.println(inConsoleString); // set console input for send
-                outStream.flush(); // send chosen option to server
+                outStream.println(inConsoleString);
+                outStream.flush();
                 
-                // server response
-                inServerString = inStream.readObject().toString(); // object to string
-                System.out.println(inServerString); // prints server option prompt
-                
-                // send name information to server
-                inConsoleString = inConsole.readLine(); // get user request (name)
-                outStream.println(inConsoleString); // set console input for send
-                outStream.flush(); // send name to server
-                
-                // server response
-                inServerString = inStream.readObject().toString(); // object to string
-                System.out.println(inServerString); // prints server option answer
+                if (!inConsoleString.equals("5")) { // if not exit option
+                    // server response
+                    inServerString = inStream.readObject().toString();
+                    System.out.println(inServerString); // prints server prompt
+
+                    // send name information to server
+                    inConsoleString = inConsole.readLine(); // get name
+                    outStream.println(inConsoleString);
+                    outStream.flush();
+
+                    // server response
+                    inServerString = inStream.readObject().toString();
+                    System.out.println(inServerString); // prints result
+                }
             } while (!inConsoleString.equals("5")); // loop until exit option
             
             sock.close(); // close socket
