@@ -21,22 +21,18 @@ public class NameClient {
         try (Socket sock = new Socket(server, SERVER_PORT)) { // create socket
             System.out.println("Connected to " + args[0]); // print connection
             
-            // output to server
+            // initiate streams
             PrintWriter outStream = 
-                    new PrintWriter(sock.getOutputStream()); 
-            
-            // input from server
+                new PrintWriter(sock.getOutputStream()); // output to server
             ObjectInputStream inStream =
-                    new ObjectInputStream(sock.getInputStream());
-            
-            // user console input
+                new ObjectInputStream(sock.getInputStream()); // input from server
             BufferedReader inConsole =
-                    new BufferedReader(
-                            new InputStreamReader(System.in));
+                new BufferedReader(
+                    new InputStreamReader(System.in)); // user console input
             
             // SERVER COMMUNICATION
-            do { // loop through server communication until exit option
-                do { // display menu, request option while non/no valid option
+            do { // loop through until exit option
+                do { // display menu, request option while option not valid
                     displayMenu();
                     inConsoleString = inConsole.readLine();
                 } while (!validateMenuOption(inConsoleString));
@@ -72,7 +68,7 @@ public class NameClient {
                 +"1. Add a name\n2. Remove a name\n3. List all names\n"
                 +"4. Check if name recorded\n5. Exit\n\n"
                 +"Enter selection [1-5]:");
-    }
+    } // end displayMenu()
     
     // validate menu choice input from user/console
     public static boolean validateMenuOption(String input) {
@@ -91,6 +87,6 @@ public class NameClient {
             +"  Please type a single digit [1-5] for menu option.");
         }
         return valid;
-    }
+    } // end validateMenuOption()
     
 } // end class

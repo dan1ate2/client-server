@@ -23,11 +23,9 @@ public class NameServer {
             +InetAddress.getLocalHost().getHostAddress()
             +" on port "+SERVER_PORT+"\n");
         
-        // set up server socket
-        ServerSocket ssock = new ServerSocket(SERVER_PORT);
-        
+        ServerSocket ssock = new ServerSocket(SERVER_PORT); // set server socket
         getFileData(); // load file into array
-        
+
             while (true) {
                 // wait for client input
                 try (Socket sock = ssock.accept()) {
@@ -78,7 +76,6 @@ public class NameServer {
         // load names file
         public static void getFileData() throws IOException {
         File file = new File("src/names.txt");
-
             // load file data
             if (file.exists()) {
                 try (BufferedReader br = 
@@ -91,11 +88,10 @@ public class NameServer {
                             namesList.add(line);
                         }
                     }
-
                     br.close(); // close buff
                 } // end try buff
             } // end if
-        }
+        } // end getFileData()
         
         // saves the list to a file (overwrites previous)
         public static void saveToFile() throws IOException {
@@ -105,9 +101,9 @@ public class NameServer {
                     if (!s.equals("")) {
                         fw.write(s+"\n");
                     }
-                }
-            }
-        }
+                } // end for
+            } // end try
+        } // end save to file()
 
         // initiates menu command request
         public static String menuCommand(int i, String cInput) {
@@ -123,15 +119,17 @@ public class NameServer {
                         result = "** Error, no name entered.";
                     }
                     break;
+                    
                 case 2: // remove a name
                     if (namesList.removeIf(cInput::equals)) { // remove if match
-                    // :: = method reference - ClassName::MethodName (Java 8) BOOM!
+                    // :: = method reference - ClassName::MethodName (Java 8)
                        result = "\""+cInput+"\""+" removed from list."; 
                     }
                     else {
                         result = "** \""+cInput+"\""+" not found.";
                     }
                     break;
+                
                 case 3: // list all names
                     // iterate through list, concatenate, new line
                     result = "";
@@ -139,6 +137,7 @@ public class NameServer {
                             result += s + "\n";
                         }
                     break;
+                
                 case 4: // check if a name recorded
                     if (namesList.contains(cInput)) {
                         result = "\""+cInput+"\""+" is recorded in list.";
@@ -147,12 +146,13 @@ public class NameServer {
                         result = "** \""+cInput+"\""+" not found in list.";
                     } 
                     break;
+                
                 default:
                     result = "** Error finding correct menu option.";
                     break;
             } // end switch
             return result;
-        } // end menuCommand
+        } // end menuCommand()
         
         // get prompt for user chosen menu option [1-4]
         public static String promptClient(int menuOpt){
@@ -179,6 +179,6 @@ public class NameServer {
                     break;
             } // end switch
             return prompt;
-        } // end promptClient
+        } // end promptClient()
     
 } // end class NameServer
