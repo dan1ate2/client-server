@@ -3,7 +3,8 @@
     ISY00246
     Assignment 1
     Part 3b
-    Purpose: Client
+    Purpose: Client app that allows connection to server app and read/modify
+        list of names that are recorded in a file.
  */
 import java.io.*;
 import java.net.*;
@@ -12,7 +13,7 @@ public class NameClient {
     private static final int SERVER_PORT = 2015;
     
     public static void main(String[] args) 
-            throws UnknownHostException, IOException {
+            throws UnknownHostException, IOException, ClassNotFoundException {
         String inConsoleString;
         String inServerString;
 
@@ -20,34 +21,43 @@ public class NameClient {
         try (Socket sock = new Socket(server, SERVER_PORT)) { // create socket
             System.out.println("Connected to " + args[0]); // print connection
             
-            // output to server
-            PrintStream outStream = 
-                    new PrintStream(sock.getOutputStream()); 
-            
-            // input from server
-            BufferedReader inStream =
-                    new BufferedReader(
-                            new InputStreamReader(sock.getInputStream()));
-            
-            // user console input
+            // initiate streams
+            PrintWriter outStream = 
+                new PrintWriter(sock.getOutputStream()); // output to server
+            ObjectInputStream inStream =
+                new ObjectInputStream(sock.getInputStream()); // input from server
             BufferedReader inConsole =
-                    new BufferedReader(
-                            new InputStreamReader(System.in));
+                new BufferedReader(
+                    new InputStreamReader(System.in)); // user console input
             
-            // server program interaction
-            do {
-                do {
-                    displayMenu(); // display menu
-                    inConsoleString = inConsole.readLine(); // get user option/input
-                } while (!validateMenuOption(inConsoleString)); // check valid input
+            // SERVER COMMUNICATION
+            do { // loop through until exit option
+                do { // display menu, request option while option not valid
+                    displayMenu();
+                    inConsoleString = inConsole.readLine();
+                } while (!validateMenuOption(inConsoleString));
                 
                 // send request to server
-                outStream.println(inConsoleString); // set console input for send
-                outStream.flush(); // send to server
-                inServerString = inStream.readLine(); // get from server
-                System.out.println("Server received: "+inServerString);
+                outStream.println(inConsoleString);
+                outStream.flush();
+                
+                if (!inConsoleString.equals("5")) { // if not exit option
+                    // server response
+                    inServerString = inStream.readObject().toString();
+                    System.out.println(inServerString); // prints server prompt
+
+                    // send name information to server
+                    inConsoleString = inConsole.readLine(); // get name
+                    outStream.println(inConsoleString);
+                    outStream.flush();
+
+                    // server response
+                    inServerString = inStream.readObject().toString();
+                    System.out.println(inServerString); // prints result
+                }
             } while (!inConsoleString.equals("5")); // loop until exit option
             
+            System.out.println("Goodbye");
             sock.close(); // close socket
         } // end try socket
     } // end main method
@@ -58,7 +68,7 @@ public class NameClient {
                 +"1. Add a name\n2. Remove a name\n3. List all names\n"
                 +"4. Check if name recorded\n5. Exit\n\n"
                 +"Enter selection [1-5]:");
-    }
+    } // end displayMenu()
     
     // validate menu choice input from user/console
     public static boolean validateMenuOption(String input) {
@@ -77,6 +87,6 @@ public class NameClient {
             +"  Please type a single digit [1-5] for menu option.");
         }
         return valid;
-    }
+    } // end validateMenuOption()
     
 } // end class
