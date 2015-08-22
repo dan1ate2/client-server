@@ -6,6 +6,8 @@
     Purpose: Client app that allows connection to server app and read/modify
         list of names that are recorded in a file.
  */
+package Part3c;
+
 import java.io.*;
 import java.net.*;
 
@@ -89,4 +91,4 @@ public class ThreadClient {
         return valid;
     } // end validateMenuOption()
     
-} // end class
+} // end ThreadedClient class

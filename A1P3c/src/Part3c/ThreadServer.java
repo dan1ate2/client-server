@@ -6,6 +6,8 @@
     Purpose: Server app that reads/writes list of names to/from file.
         Allows client to connect and modify.
  */
+package Part3c;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
