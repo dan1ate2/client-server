@@ -24,11 +24,6 @@ public class ClientThreadTest {
                     new InputStreamReader(System.in)); // user console input
             System.out.println("Initiated streams");
             
-//            // server interaction
-//            outStream.println("Hello from client"); // out
-//            outStream.flush(); // out
-//            System.out.println(inStream.readObject()); // in
-            
             // SERVER COMMUNICATION
             do { // loop through until exit option
                 do { // display menu, request option while option not valid
