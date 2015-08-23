@@ -10,6 +10,7 @@ public class ServerThreadTest {
     public static List<String> namesList = new ArrayList(); // LOOKUP CASE FORMAT FOR GLOBAL VARIABLE (IE CAMELCASE)
     
     public static void main(String[] args) throws IOException {
+        
         getFileData(); // load file into array 
         
         System.out.println("Server operating on "
@@ -19,7 +20,7 @@ public class ServerThreadTest {
         
         while (true) {
             try {
-                // wait for incoming connection
+            // wait for incoming connection
             Socket sock = ssock.accept();
             System.out.println(sock.getInetAddress().getHostAddress() 
                 + " is now connected");
