@@ -1,5 +1,7 @@
 /*
     Dan Hogan
+    dhogan15
+    22108261
     ISY00246
     Assignment 1
     Part 1b
