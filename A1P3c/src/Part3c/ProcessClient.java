@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//System.out.println("");
 package Part3c;
 
+import static Part3c.ThreadServer.namesList;
 import java.io.*;
 import java.net.*;
 
@@ -18,24 +15,29 @@ public class ProcessClient implements Runnable{
     Socket sock;
     
     // constructor
-    
+    public ProcessClient (Socket s) {
+        this.sock = s;
+    }
     
     @Override
     public void run() {
-        // CLIENT COMMUNICATION
-        
         // create in and out streams
         try {
-            ObjectOutputStream outStream = 
-                    new ObjectOutputStream(sock.getOutputStream());
+            ObjectOutputStream outStream = null;
+            outStream = 
+                new ObjectOutputStream(sock.getOutputStream());
+            outStream.flush();
             BufferedReader inStream =
                     new BufferedReader(
                             new InputStreamReader(sock.getInputStream()));
+            System.out.println("Created streams");
 
+            System.out.println("Entering 'while !inString equals 5' loop");
             while (!inString.equals("5")) { // loop until exit option
                 inString = inStream.readLine(); // read menu option from client
                 int menuOption = Integer.parseInt(inString); // set menu option
 
+                System.out.println("Entering 'if inString = 5'");
                 if (!inString.equals("5")) {
                     // prompt client for name
                     outStream.writeObject(promptClient(menuOption));
@@ -60,7 +62,8 @@ public class ProcessClient implements Runnable{
             System.out.println("Updated/saved names file.");
         } // end try
         catch (IOException ioe) {
-            
+            System.out.println("Error handling client interaction.");
+            ioe.printStackTrace();
         }
     }
         
