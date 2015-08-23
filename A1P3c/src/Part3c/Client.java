@@ -11,14 +11,13 @@ package Part3c;
 import java.io.*;
 import java.net.*;
 
-public class ThreadClient {
+public class Client {
     private static final int SERVER_PORT = 2015;
     
     public static void main(String[] args) 
             throws UnknownHostException, IOException, ClassNotFoundException {
         String inConsoleString;
-        String inServerString;
-
+        
         InetAddress server = InetAddress.getByName(args[0]); // server address
         try (Socket sock = new Socket(server, SERVER_PORT)) { // create socket
             System.out.println("Connected to " + args[0]); // print connection
@@ -31,6 +30,7 @@ public class ThreadClient {
             BufferedReader inConsole =
                 new BufferedReader(
                     new InputStreamReader(System.in)); // user console input
+            System.out.println("Initiated streams");
             
             // SERVER COMMUNICATION
             do { // loop through until exit option
@@ -45,8 +45,7 @@ public class ThreadClient {
                 
                 if (!inConsoleString.equals("5")) { // if not exit option
                     // server response
-                    inServerString = inStream.readObject().toString();
-                    System.out.println(inServerString); // prints server prompt
+                    System.out.println(inStream.readObject()); // prints server prompt
 
                     // send name information to server
                     inConsoleString = inConsole.readLine(); // get name
@@ -54,15 +53,11 @@ public class ThreadClient {
                     outStream.flush();
 
                     // server response
-                    inServerString = inStream.readObject().toString();
-                    System.out.println(inServerString); // prints result
+                    System.out.println(inStream.readObject()); // prints result
                 }
             } while (!inConsoleString.equals("5")); // loop until exit option
-            
-            System.out.println("Goodbye");
-            sock.close(); // close socket
-        } // end try socket
-    } // end main method
+        }
+    }
     
     // display the main menu
     public static void displayMenu() {
@@ -91,4 +86,4 @@ public class ThreadClient {
         return valid;
     } // end validateMenuOption()
     
-} // end ThreadedClient class
+}
