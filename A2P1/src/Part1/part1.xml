@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:annotation>
+	<xsd:documentation xml:lang="en">
+		Team details for "The A Team" (code theATeam)
+	</xsd:documentation>
+</xsd:annotation>
+	
+<xsd:element name="team" type="teamType"/>
+
+<xsd:complexType  name="teamType">
+	<xsd:sequence>
+		
+	</xsd:sequence>
+</xsd:complexType >
+
+</xsd:schema>
