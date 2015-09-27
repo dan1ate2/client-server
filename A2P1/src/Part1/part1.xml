@@ -1,68 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-<xsd:annotation>
-	<xsd:documentation xml:lang="en">
-		Validate xml docs for teams and their players
-	</xsd:documentation>
-</xsd:annotation>
-	
-<xsd:element name="team" type="teamType"/>
-
-<xsd:complexType  name="teamType">
-	<xsd:sequence>
-		<xsd:element name="teamDetail" type="teamDetailType" minOccurs="1" maxOccurs="1"/>
-		<xsd:element name="member" type="memberType" minOccurs="2" maxOccurs="20"/>
-	</xsd:sequence>
-</xsd:complexType>
-
-<xsd:complexType  name="teamDetailType">
-	<xsd:sequence>
-		<xsd:element name="leader" type="leaderType"/>
-		<xsd:element name="fullname" type="xsd:string"/>
-		<xsd:element name="players">
-			<xsd:simpleType>
-				<xsd:restriction base="xs:integer">
-			    	<xsd:minInclusive value="2"/>
-			    	<xsd:maxInclusive value="20"/>
-		  		</xsd:restriction>
-	  		</xsd:simpleType>
-		</xsd:element>
-	</xsd:sequence>
-	<xsd:attribute name="id" use="required">
-		<xsd:simpleType>
-			<xsd:restriction base="xs:string">
-		    	<xsd:minLength value="4"/>
-		    	<xsd:maxLength value="10"/>
-	  		</xsd:restriction>
-  		</xsd:simpleType>
-	</xsd:attribute>
-</xsd:complexType>
-
-<xsd:complexType  name="leaderType">
-	<xsd:sequence>
-		<xsd:element name="name" type="xsd:string"/>
-		<xsd:element name="phone" type="xsd:integer"/>
-		<xsd:element name="email" type="xsd:string" minOccurs="0"/>
-	</xsd:sequence>
-</xsd:complexType> 
-
-<xsd:complexType  name="memberType">
-	<xsd:sequence>
-		<xsd:element name="mailAddress" type="leaderType"/>
-		<xsd:element name="feesPaid" type="feesType"/>
-		<xsd:element name="altPosition" type="xsd:string" minOccurs="0"/>
-	</xsd:sequence>
-	<xsd:attribute name="name" type="xsd:string" use="required"/>
-	<xsd:attribute name="position" type="xsd:string" use="required"/>
-</xsd:complexType>
-
-<xsd:simpleType  name="feesType">
-	<xsd:restriction base="xsd:decimal">
-      <xsd:enumeration value="0.0"/>
-      <xsd:enumeration value="10.0"/>
-      <xsd:enumeration value="50.0"/>
-      <xsd:enumeration value="100.0"/>
-   </xsd:restriction>
-</xsd:simpleType>
-
-</xsd:schema>
+<?xml version="1.0"?>
+<!-- the A team details -->
+<team>
+<teamDetail id="theATeam">
+<leader>
+<name>Barry Wilks</name>
+<phone>9999 3002</phone>
+<email>barwil@mail.com</email>
+</leader>
+<fullname>The A Team</fullname>
+<players no="3"/>
+</teamDetail>
+<member name="Jo Player" position="left half">
+<mailAddress>Long Road, Upper Woop Woop West, NSW</mailAddress>
+<altPosition>left wing</altPosition>
+<feesPaid>100.00</feesPaid>
+</member>
+<member name="Peter Player" position="goal keeper">
+<mailAddress>Short Road, Woop Woop, NSW</mailAddress>
+<feesPaid>0.00</feesPaid>
+</member>
+<member name="Barry Wilks" position="back">
+<mailAddress>23 Jetty Street, Coffs Jetty, NSW</mailAddress>
+<altPosition>left right out</altPosition>
+<feesPaid>100.00</feesPaid>
+</member>
+</team>
