@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <team>
-<teamDetail id="theATeam">
-<leader>
-<name>Barry Wilks</name>
-<phone>9999 3002</phone>
-<email>barwil@mail.com</email>
-</leader>
-<fullname>The A Team</fullname>
-<players no="3"/>
-</teamDetail>
-<member name="Jo Player" position="left half">
-<mailAddress>Long Road, Upper Woop Woop West, NSW</mailAddress>
-<altPosition>left wing</altPosition>
-<feesPaid>100.00</feesPaid>
-</member>
-<member name="Peter Player" position="goal keeper">
-<mailAddress>Short Road, Woop Woop, NSW</mailAddress>
-<feesPaid>0.00</feesPaid>
-</member>
-<member name="Barry Wilks" position="back">
-<mailAddress>23 Jetty Street, Coffs Jetty, NSW</mailAddress>
-<altPosition>left right out</altPosition>
-<feesPaid>100.00</feesPaid>
-</member>
+    <teamDetail id="theATeam">
+        <leader>
+            <name>Barry Wilks</name>
+            <phone>9999 3002</phone>
+            <email>barwil@mail.com</email>
+        </leader>
+        <fullname>The A Team</fullname>
+        <players no="3"/>
+    </teamDetail>
+    <member name="Jo Player" position="left half">
+        <mailAddress>Long Road, Upper Woop Woop West, NSW</mailAddress>
+        <altPosition>left wing</altPosition>
+        <feesPaid>100.00</feesPaid>
+    </member>
+    <member name="Peter Player" position="goal keeper">
+        <mailAddress>Short Road, Woop Woop, NSW</mailAddress>
+        <feesPaid>0.00</feesPaid>
+    </member>
+    <member name="Barry Wilks" position="back">
+        <mailAddress>23 Jetty Street, Coffs Jetty, NSW</mailAddress>
+        <altPosition>left right out</altPosition>
+        <feesPaid>100.00</feesPaid>
+    </member>
 </team>
